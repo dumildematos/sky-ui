@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@sky-ui/shared-utils": ["libs/shared/utils/src/index.ts"],
+      "@sky-ui/shared-styles": ["libs/shared/styles/src/index.ts"],
+      "@sky-ui/react-sky": ["libs/react-sky/src/index.ts"],
+      "@sky-ui/angular-sky": ["libs/angular-sky/src/index.ts"]
+    }
+  }
+}

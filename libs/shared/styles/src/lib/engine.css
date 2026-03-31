@@ -1,0 +1,39 @@
+/* Shared CSS Tokens for SkyUI */
+:root {
+  /* Three levels of backdrop-filter */
+  --stratus-blur: blur(6px);
+  --cumulus-blur: blur(18px);
+  --nimbus-blur: blur(45px);
+
+  /* Specular Lighting (The 1px Edge) */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --glass-gradient-border: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+
+  /* Themed Tints */
+  --arctic-mist: #67e8f9; /* Cool Cyan glow */
+  --deep-horizon: #1e3a8a; /* Midnight Blue shadow */
+}
+
+/* Base Glass Class */
+.sky-glass {
+  background: var(--sky-bg-base);
+  backdrop-filter: var(--cumulus-blur);
+  -webkit-backdrop-filter: var(--cumulus-blur);
+  border: var(--glass-border);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Update libs/shared/styles/src/lib/engine.css */
+.sky-glass-stratus {
+  --nesting-level: 1;
+  backdrop-filter: blur(calc(6px * var(--nesting-level)));
+  background: rgba(255, 255, 255, calc(0.1 * var(--nesting-level)));
+}
+
+.sky-glass-stratus .sky-glass-stratus {
+  --nesting-level: 2; /* Deeper blur when cards are inside cards */
+}

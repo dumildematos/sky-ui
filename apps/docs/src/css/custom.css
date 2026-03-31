@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* Skinning the Navbar with Nimbus Blur */
+.navbar {
+  background: var(--sky-bg-glass) !important;
+  backdrop-filter: var(--sky-blur-nimbus);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Skinning the Sidebar */
+.theme-doc-sidebar-container {
+  background: rgba(15, 23, 42, 0.3) !important;
+  backdrop-filter: var(--sky-blur-stratus);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* The Search Bar (SkyUI Glow) */
+.navbar__search-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease;
+}
+
+.navbar__search-input:focus {
+  box-shadow: 0 0 15px var(--arctic-mist);
+  border-color: var(--arctic-mist) !important;
+}
+
+/* Specular Edge Lighting for all SkyUI Glass Components */
+.sky-glass-nimbus, .sky-glass-cumulus, .sky-glass-stratus {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.sky-glass-nimbus::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* The 1px border */
+  background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.05) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

@@ -4,10 +4,31 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@docusaurus/module-type-aliases": "^3.9.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "animejs": "^4.3.6",
+    "d3": "^7.9.0",
+    "lucide-angular": "^1.0.0",
+    "lucide-react": "^1.7.0",
+    "mermaid": "^11.13.0",
+    "tailwindcss": "^4.2.2"
+  },
   "devDependencies": {
-    "@nx/js": "22.6.3",
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/eslint-plugin": "3.9.2",
+    "@docusaurus/preset-classic": "^3.9.2",
+    "@docusaurus/tsconfig": "3.9.2",
+    "@nx/js": "^22.6.3",
+    "@nx/vite": "^22.6.3",
     "@nx/workspace": "22.6.3",
-    "nx": "22.6.3"
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/color": "^3.0.4",
+    "@types/jest": "^29.5.3",
+    "cross-env": "^7.0.3",
+    "nx": "22.6.3",
+    "rimraf": "^3.0.2",
+    "search-insights": "^2.8.2",
+    "tsconfig-paths-webpack-plugin": "^4.2.0"
   }
 }
