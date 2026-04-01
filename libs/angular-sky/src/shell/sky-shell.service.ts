@@ -1,5 +1,5 @@
 // libs/angular-sky/src/shell/sky-shell.service.ts
-import { Injectable, signal } from '@angular/core';
+import { Component, Injectable, Input, computed, inject, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class SkyService {
@@ -11,15 +11,11 @@ export class SkyService {
   }
 }
 
-// libs/angular-sky/src/shell/sky-shell.component.ts
-import { Component, inject } from '@angular/core';
-import { SkyService } from './sky-shell.service';
-
 @Component({
   selector: 'sky-shell',
   standalone: true,
   template: `
-    <div [class]="sky.theme()" class="sky-shell-root min-h-screen relative overflow-hidden">
+    <div [class]="effectiveTheme()" class="sky-shell-root min-h-screen relative overflow-hidden">
       <div class="sky-aurora-container fixed inset-0 -z-10">
         <div class="aurora-layer layer-1"></div>
         <div class="aurora-layer layer-2"></div>
@@ -32,5 +28,7 @@ import { SkyService } from './sky-shell.service';
   `
 })
 export class SkyShellComponent {
+  themeMode = Input<'daylight' | 'midnight' | null>(null);
   sky = inject(SkyService);
+  effectiveTheme = computed(() => this.themeMode() ?? this.sky.theme());
 }

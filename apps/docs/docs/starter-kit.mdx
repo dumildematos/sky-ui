@@ -1,0 +1,70 @@
+---
+id: starter-kit
+title: Starter Kit
+sidebar_position: 2
+---
+
+import { Activity, Rocket, Shield } from 'lucide-react';
+import { SkyButton, SkyCard, SkyShell } from '@sky-ui/react-sky';
+
+# Starter Kit
+
+<SkyCardDoc
+  title="Starter Weather Station"
+  description="A starter composition that nests a responsive D3 chart inside SkyCard and uses glow-filter Lucide actions for a lightweight control strip."
+  code={`<SkyShell theme="midnight">
+  <SkyCard className="p-6">
+    <ResponsiveGlassChart data={[14, 22, 30, 26, 44, 38, 52]} />
+  </SkyCard>
+</SkyShell>`}
+>
+  <SkyShell theme="midnight" fullHeight={false}>
+    <SkyCard className="p-6">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="sky-section-eyebrow mb-1">Starter Surface</p>
+          <h2 className="m-0 text-2xl font-light">Telemetry panel inside a SkyCard shell</h2>
+        </div>
+        <div className="flex gap-2 text-cyan-200">
+          <button className="rounded-full border border-white/10 bg-white/5 p-3"><Activity className="sky-glow-icon" size={16} /></button>
+          <button className="rounded-full border border-white/10 bg-white/5 p-3"><Shield className="sky-glow-icon" size={16} /></button>
+          <button className="rounded-full border border-white/10 bg-white/5 p-3"><Rocket className="sky-glow-icon" size={16} /></button>
+        </div>
+      </div>
+      <ResponsiveGlassChart title="Launch Corridor" data={[14, 22, 30, 26, 44, 38, 52]} />
+    </SkyCard>
+  </SkyShell>
+</SkyCardDoc>
+
+## Live Playground
+
+```jsx live
+function StarterKitLive() {
+  const [theme, setTheme] = React.useState('midnight');
+
+  return (
+    <SkyShell theme={theme} fullHeight={false}>
+      <SkyCard className="p-6">
+        <div className="mb-4 flex flex-wrap gap-3">
+          <SkyButton color="cyan" theme={theme} onClick={() => setTheme('midnight')}>Midnight</SkyButton>
+          <SkyButton color="amber" theme={theme} onClick={() => setTheme('daylight')}>Daylight</SkyButton>
+        </div>
+        <div className="rounded-2xl border border-white/8 bg-white/5 p-4">
+          <div className="text-sm uppercase tracking-[0.28em] text-slate-400">Preview Surface</div>
+          <div className="mt-3 text-2xl font-light">SkyCard + SkyButton + SkyShell</div>
+        </div>
+      </SkyCard>
+    </SkyShell>
+  );
+}
+```
+
+<MermaidAnatomy
+  title="Starter composition"
+  chart={`flowchart LR
+    A[SkyShell] --> B[SkyCard]
+    B --> C[Action Buttons]
+    B --> D[Responsive D3 Chart]
+    C --> E[Theme Toggle]
+    D --> F[Telemetry Surface]`}
+/>

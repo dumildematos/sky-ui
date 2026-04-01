@@ -1,39 +1,116 @@
-/* Shared CSS Tokens for SkyUI */
 :root {
-  /* Three levels of backdrop-filter */
-  --stratus-blur: blur(6px);
-  --cumulus-blur: blur(18px);
-  --nimbus-blur: blur(45px);
-
-  /* Specular Lighting (The 1px Edge) */
-  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
-  --glass-gradient-border: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-
-  /* Themed Tints */
-  --arctic-mist: #67e8f9; /* Cool Cyan glow */
-  --deep-horizon: #1e3a8a; /* Midnight Blue shadow */
+  --sky-blur-stratus: blur(6px);
+  --sky-blur-cumulus: blur(18px);
+  --sky-blur-nimbus: blur(45px);
+  --sky-bg-base: rgba(15, 23, 42, 0.42);
+  --sky-bg-glass: linear-gradient(155deg, rgba(8, 15, 33, 0.76), rgba(15, 23, 42, 0.42));
+  --sky-surface-daylight: linear-gradient(155deg, rgba(255, 255, 255, 0.78), rgba(226, 232, 240, 0.44));
+  --sky-border: rgba(148, 163, 184, 0.22);
+  --sky-border-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.08) 45%, rgba(255, 255, 255, 0) 100%);
+  --sky-shadow-deep: 0 24px 60px rgba(2, 6, 23, 0.35);
+  --sky-shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.22);
+  --arctic-mist: #67e8f9;
+  --deep-horizon: #0f172a;
+  --sky-text-primary: #f8fafc;
+  --sky-text-secondary: rgba(226, 232, 240, 0.72);
 }
 
-/* Base Glass Class */
-.sky-glass {
-  background: var(--sky-bg-base);
-  backdrop-filter: var(--cumulus-blur);
-  -webkit-backdrop-filter: var(--cumulus-blur);
-  border: var(--glass-border);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+[data-sky-theme='daylight'] {
+  --sky-bg-base: rgba(255, 255, 255, 0.42);
+  --sky-bg-glass: var(--sky-surface-daylight);
+  --sky-border: rgba(255, 255, 255, 0.62);
+  --sky-shadow-deep: 0 24px 60px rgba(148, 163, 184, 0.24);
+  --sky-text-primary: #0f172a;
+  --sky-text-secondary: rgba(15, 23, 42, 0.68);
 }
 
-/* Update libs/shared/styles/src/lib/engine.css */
+.sky-glass,
+.sky-glass-cumulus,
+.sky-glass-nimbus,
+.sky-glass-stratus,
+.sky-card,
+.sky-nav {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--sky-border);
+  background: var(--sky-bg-glass);
+  box-shadow: var(--sky-shadow-deep), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  contain: paint;
+}
+
 .sky-glass-stratus {
-  --nesting-level: 1;
-  backdrop-filter: blur(calc(6px * var(--nesting-level)));
-  background: rgba(255, 255, 255, calc(0.1 * var(--nesting-level)));
+  backdrop-filter: var(--sky-blur-stratus);
+  -webkit-backdrop-filter: var(--sky-blur-stratus);
 }
 
-.sky-glass-stratus .sky-glass-stratus {
-  --nesting-level: 2; /* Deeper blur when cards are inside cards */
+.sky-glass,
+.sky-glass-cumulus,
+.sky-card {
+  backdrop-filter: var(--sky-blur-cumulus);
+  -webkit-backdrop-filter: var(--sky-blur-cumulus);
+}
+
+.sky-glass-nimbus,
+.sky-nav {
+  backdrop-filter: var(--sky-blur-nimbus);
+  -webkit-backdrop-filter: var(--sky-blur-nimbus);
+}
+
+.sky-card__edge,
+.sky-glass::before,
+.sky-glass-cumulus::before,
+.sky-glass-nimbus::before,
+.sky-glass-stratus::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--sky-border-specular);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.sky-shell-root {
+  color: var(--sky-text-primary);
+}
+
+.sky-shell-root.daylight {
+  color: #0f172a;
+}
+
+.sky-glow-icon {
+  filter: drop-shadow(0 0 12px rgba(103, 232, 249, 0.26));
+}
+
+.sky-aurora-container {
+  pointer-events: none;
+}
+
+.aurora-layer {
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0.45;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+}
+
+.aurora-layer.layer-1 {
+  top: -10%;
+  left: -12%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0) 68%);
+}
+
+.aurora-layer.layer-2 {
+  right: -8%;
+  bottom: -14%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(168, 85, 247, 0) 70%);
 }

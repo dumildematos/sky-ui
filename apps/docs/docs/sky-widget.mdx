@@ -1,0 +1,38 @@
+---
+id: sky-widget
+title: SkyWidget
+sidebar_position: 4
+---
+
+import { SkyWidget } from '@sky-ui/react-sky';
+
+# SkyWidget
+
+<SkyPlayground
+  title="The Stage"
+  description="A compact telemetry surface with D3 rendering, floating controls, and atmospheric glass intended for dense monitoring interfaces."
+  reactCode={`import { SkyWidget } from '@sky-ui/react-sky';
+
+export function Example() {
+  return <SkyWidget title="Atmospheric Pressure" data={[10, 25, 45, 30]} />;
+}`}
+  angularCode={`<sky-widget [title]="'Atmospheric Pressure'" [data]="[10, 25, 45, 30]"></sky-widget>`}
+  renderPreview={() => <SkyWidget title="Live Telemetry" data={[20, 40, 35, 50, 45, 70, 65]} />}
+/>
+
+<div className="mt-8 grid gap-6 lg:grid-cols-2">
+  <GlowIconGrid items={['Activity', 'Gauge', 'RefreshCw', 'Maximize2']} title="Telemetry icon language" />
+  <ResponsiveGlassChart title="Internal data cadence" data={[18, 24, 28, 26, 34, 48, 44, 54, 60]} />
+</div>
+
+<div className="mt-8">
+  <MermaidAnatomy
+    title="Widget data flow"
+    chart={`flowchart LR
+      A[Props: title + data] --> B[SkyWidget]
+      B --> C[useSky Theme Context]
+      B --> D[D3 Renderer]
+      D --> E[Responsive SVG Chart]
+      C --> F[Accent + Surface Styling]`}
+  />
+</div>

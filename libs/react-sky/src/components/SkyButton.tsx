@@ -63,7 +63,7 @@ export const SkyButton = ({
   return (
     <button
       type={type}
-      className="inline-flex items-center justify-center rounded-full border px-5 py-3 text-sm font-medium tracking-[0.18em] uppercase transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex min-h-11 max-w-full items-center justify-center rounded-full border px-4 py-3 text-center text-sm font-medium uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 sm:px-5"
       style={{
         background: surface.background,
         color: surface.text,
@@ -71,11 +71,12 @@ export const SkyButton = ({
         boxShadow: `${surface.shadow}, 0 0 0 1px rgba(255, 255, 255, 0.06) inset, 0 0 28px ${palette.glow}`,
         backdropFilter: 'blur(18px)',
         WebkitBackdropFilter: 'blur(18px)',
+        whiteSpace: 'normal',
         ...style,
       }}
       {...buttonProps}
     >
-      <span style={{ textShadow: `0 0 16px ${palette.glow}` }}>{children}</span>
+      <span style={{ textShadow: `0 0 16px ${palette.glow}`, maxWidth: '100%' }}>{children}</span>
     </button>
   );
 };

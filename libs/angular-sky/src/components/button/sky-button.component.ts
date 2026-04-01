@@ -50,15 +50,16 @@ const buttonSurfaces: Record<SkyButtonTheme, { background: string; text: string;
   template: `
     <button
       type="button"
-      class="inline-flex items-center justify-center rounded-full border px-5 py-3 text-sm font-medium uppercase tracking-[0.18em] transition-all duration-300"
+      class="inline-flex min-h-11 max-w-full items-center justify-center rounded-full border px-4 py-3 text-center text-sm font-medium uppercase tracking-[0.18em] transition-all duration-300 sm:px-5"
       [style.background]="surface.background"
       [style.color]="surface.text"
       [style.borderColor]="palette.border"
       [style.boxShadow]="surface.shadow + ', 0 0 0 1px rgba(255, 255, 255, 0.06) inset, 0 0 28px ' + palette.glow"
       [style.backdropFilter]="'blur(18px)'"
       [style.webkitBackdropFilter]="'blur(18px)'"
+      [style.whiteSpace]="'normal'"
     >
-      <span [style.textShadow]="'0 0 16px ' + palette.glow">{{ label() }}</span>
+      <span [style.textShadow]="'0 0 16px ' + palette.glow" [style.maxWidth]="'100%'">{{ label() }}</span>
     </button>
   `,
 })

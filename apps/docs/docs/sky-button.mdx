@@ -1,0 +1,50 @@
+---
+id: sky-button
+title: SkyButton
+sidebar_position: 3
+---
+
+import { SkyButton } from '@sky-ui/react-sky';
+
+# SkyButton
+
+<SkyPlayground
+  title="The Stage"
+  description="A glass action control with theme-aware surfaces, luminous accents, and responsive preview modes from Stratus mobile to Nimbus desktop."
+  reactCode={`import { SkyButton } from '@sky-ui/react-sky';
+
+export function Example() {
+  return (
+    <div className="flex flex-wrap gap-3">
+      <SkyButton color="cyan" theme="midnight">Launch</SkyButton>
+      <SkyButton color="emerald" theme="midnight">Deploy</SkyButton>
+      <SkyButton color="rose" theme="daylight">Alert</SkyButton>
+    </div>
+  );
+}`}
+  angularCode={`<div class="flex flex-wrap gap-3">
+  <sky-button [label]="'Launch'" [color]="'cyan'" [theme]="'midnight'"></sky-button>
+  <sky-button [label]="'Deploy'" [color]="'emerald'" [theme]="'midnight'"></sky-button>
+  <sky-button [label]="'Alert'" [color]="'rose'" [theme]="'daylight'"></sky-button>
+</div>`}
+  renderPreview={({ theme }) => (
+    <div className="flex flex-wrap gap-3">
+      <SkyButton color="cyan" theme={theme}>Launch</SkyButton>
+      <SkyButton color="emerald" theme={theme}>Deploy</SkyButton>
+      <SkyButton color="rose" theme={theme === 'midnight' ? 'midnight' : 'daylight'}>Alert</SkyButton>
+    </div>
+  )}
+/>
+
+<div className="mt-8 grid gap-6 lg:grid-cols-2">
+  <GlowIconGrid items={['Play', 'Rocket', 'Send', 'Sparkles']} title="Action icon language" />
+  <MermaidAnatomy
+    title="Button anatomy"
+    chart={`flowchart TD
+      A[SkyButton] --> B[Glass Surface]
+      A --> C[Accent Border]
+      A --> D[Glow Text Layer]
+      B --> E[Theme: Midnight / Daylight]
+      C --> F[Color: Cyan / Emerald / Rose / Amber / Violet]`}
+  />
+</div>

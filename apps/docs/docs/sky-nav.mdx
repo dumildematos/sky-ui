@@ -1,0 +1,89 @@
+---
+id: sky-nav
+title: SkyNav
+sidebar_position: 4
+---
+
+import { SkyButton, SkyNav } from '@sky-ui/react-sky';
+
+# SkyNav
+
+<SkyPlayground
+  title="Horizontal Navigation"
+  description="A glass navigation shell that can render horizontally or vertically, while optionally disabling the rounded edge treatment for dashboard rails and flat chrome surfaces."
+  reactCode={`import { SkyButton, SkyNav } from '@sky-ui/react-sky';
+
+export function Example() {
+  return (
+    <SkyNav theme="midnight" orientation="horizontal" rounded>
+      <SkyButton color="cyan" theme="midnight">Overview</SkyButton>
+      <SkyButton color="violet" theme="midnight">Telemetry</SkyButton>
+      <SkyButton color="emerald" theme="midnight">Launch</SkyButton>
+    </SkyNav>
+  );
+}`}
+  angularCode={`<sky-nav [theme]="'midnight'" [orientation]="'horizontal'" [rounded]="true">
+  <sky-button [label]="'Overview'" [color]="'cyan'" [theme]="'midnight'"></sky-button>
+  <sky-button [label]="'Telemetry'" [color]="'violet'" [theme]="'midnight'"></sky-button>
+  <sky-button [label]="'Launch'" [color]="'emerald'" [theme]="'midnight'"></sky-button>
+</sky-nav>`}
+  renderPreview={({ theme, viewport }) => (
+    <SkyNav theme={theme} orientation="horizontal" rounded className={viewport === 'mobile' ? 'max-w-full' : 'max-w-3xl'}>
+      <SkyButton color="cyan" theme={theme}>Overview</SkyButton>
+      <SkyButton color="violet" theme={theme}>Telemetry</SkyButton>
+      <SkyButton color="emerald" theme={theme}>Launch</SkyButton>
+    </SkyNav>
+  )}
+/>
+
+<SkyCardDoc
+  title="Vertical / Flat Rail"
+  description="Use the vertical orientation for side rails, mode switchers, or compact tool docks. Set rounded to false when the surface should align to a flat edge or a parent panel."
+  code={`<SkyNav theme="daylight" orientation="vertical" rounded={false} className="max-w-[280px]">
+  <SkyButton color="amber" theme="daylight">Overview</SkyButton>
+  <SkyButton color="rose" theme="daylight">Missions</SkyButton>
+  <SkyButton color="cyan" theme="daylight">Signals</SkyButton>
+</SkyNav>`}
+>
+  <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <SkyNav theme="daylight" orientation="vertical" rounded={false} className="max-w-[280px] justify-self-center lg:justify-self-start">
+      <SkyButton color="amber" theme="daylight">Overview</SkyButton>
+      <SkyButton color="rose" theme="daylight">Missions</SkyButton>
+      <SkyButton color="cyan" theme="daylight">Signals</SkyButton>
+      <SkyButton color="violet" theme="daylight">Archive</SkyButton>
+    </SkyNav>
+
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-2xl border border-white/8 bg-white/5 p-5">
+        <p className="sky-section-eyebrow mb-2">Orientation</p>
+        <h3 className="mb-2 text-lg font-medium">Horizontal or Vertical</h3>
+        <p className="m-0 text-sm text-slate-300/90">The layout switches between a wrapped action row and a stacked tool rail without requiring separate components.</p>
+      </div>
+      <div className="rounded-2xl border border-white/8 bg-white/5 p-5">
+        <p className="sky-section-eyebrow mb-2">Shape Control</p>
+        <h3 className="mb-2 text-lg font-medium">Rounded Optional</h3>
+        <p className="m-0 text-sm text-slate-300/90">Disable the rounded edge when the nav needs to sit flush against a workspace frame or card boundary.</p>
+      </div>
+      <div className="rounded-2xl border border-white/8 bg-white/5 p-5 sm:col-span-2">
+        <p className="sky-section-eyebrow mb-2">Responsive Behavior</p>
+        <h3 className="mb-2 text-lg font-medium">Wraps Cleanly on Small Screens</h3>
+        <p className="m-0 text-sm text-slate-300/90">The horizontal mode wraps items automatically, while the vertical mode keeps a consistent rail width for smaller viewports.</p>
+      </div>
+    </div>
+  </div>
+</SkyCardDoc>
+
+<div className="mt-8 grid gap-6 lg:grid-cols-2">
+  <GlowIconGrid items={['LayoutGrid', 'Compass', 'Rocket', 'Cloud', 'Waves', 'Sparkles']} title="Navigation icon language" />
+  <MermaidAnatomy
+    title="SkyNav anatomy"
+    chart={`flowchart TD
+      A[SkyNav] --> B[SkyCard Shell]
+      A --> C[Orientation Prop]
+      A --> D[Rounded Prop]
+      C --> E[Horizontal Wrap Layout]
+      C --> F[Vertical Rail Layout]
+      D --> G[Rounded Glass]
+      D --> H[Flat Edge Rail]`}
+  />
+</div>

@@ -4,6 +4,7 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import type { Config } from '@docusaurus/types';
 
 const repoRoot = path.resolve(__dirname, '../..');
+const packageVersion = require(path.resolve(repoRoot, 'package.json')).version;
 
 const config: Config = {
   title: 'Sky UI',
@@ -18,6 +19,7 @@ const config: Config = {
       onBrokenMarkdownLinks: 'warn',
     },
   },
+  themes: ['@docusaurus/theme-live-codeblock'],
   presets: [
     [
       'classic',
@@ -56,7 +58,15 @@ const config: Config = {
       };
     },
   ],
+  customFields: {
+    libraryVersions: [packageVersion],
+  },
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     navbar: {
       title: 'Sky UI',
       items: [
@@ -66,16 +76,46 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/sky-button',
-          label: 'SkyButton',
+          to: '/react',
+          label: 'React',
           position: 'left',
         },
         {
-          to: '/sky-widget',
-          label: 'SkyWidget',
+          to: '/angular',
+          label: 'Angular',
           position: 'left',
         },
       ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Resources',
+          items: [
+            { label: 'Overview', to: '/' },
+            { label: 'React Docs', to: '/react' },
+            { label: 'Angular Docs', to: '/angular' },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            { label: 'GitHub', href: 'https://github.com/dumildematos/sky-ui' },
+            { label: 'Issues', href: 'https://github.com/dumildematos/sky-ui/issues' },
+            { label: 'Pull Requests', href: 'https://github.com/dumildematos/sky-ui/pulls' },
+          ],
+        },
+        {
+          title: 'Help',
+          items: [
+            { label: 'Starter Kit', to: '/starter-kit' },
+            { label: 'SkyButton', to: '/sky-button' },
+            { label: 'SkyWidget', to: '/sky-widget' },
+          ],
+        },
+      ],
+      copyright: 'SkyUI Documentation Hub',
     },
   },
 };
