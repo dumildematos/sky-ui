@@ -11,8 +11,21 @@ import { useLocation } from '@docusaurus/router';
 import { animate, stagger } from 'animejs';
 import { Search, Sparkles } from 'lucide-react';
 
+const docsSidebars = require('../../sidebars.js');
+
 type RuntimeTheme = 'midnight' | 'daylight';
 type DocsFramework = 'react' | 'angular';
+type RuntimeItem = {
+  label: string;
+  description: string;
+  to: string;
+};
+type SidebarCategory = {
+  type: 'category';
+  label: string;
+  items: SidebarItem[];
+};
+type SidebarItem = string | SidebarCategory;
 
 const DEFAULT_PRIMARY_COLOR = '#67e8f9';
 const DEFAULT_SECONDARY_COLOR = '#c084fc';
@@ -76,7 +89,7 @@ type RuntimeContextValue = {
   closePalette: () => void;
 };
 
-const runtimeItems = [
+const runtimeItems: RuntimeItem[] = [
   { label: 'Overview', description: 'Landing page and hero station', to: '/' },
   { label: 'React Overview', description: 'React setup and component track', to: '/react' },
   { label: 'React Starter Kit', description: 'Compose SkyShell, SkyCard, and charts in React', to: '/react/starter-kit' },
@@ -90,12 +103,57 @@ const runtimeItems = [
   { label: 'Angular SkyWidget', description: 'Telemetry card and chart surface for Angular', to: '/angular/sky-widget' },
 ];
 
+function isSidebarCategory(item: SidebarItem): item is SidebarCategory {
+  return typeof item !== 'string' && item.type === 'category';
+}
+
+function docIdToRoute(docId: string) {
+  return `/${docId}`.replace(/\/index$/, '/');
+}
+
+function getAngularComponentItems(): RuntimeItem[] {
+  const tutorialSidebar = (docsSidebars?.tutorialSidebar ?? []) as SidebarItem[];
+  const angularCategory = tutorialSidebar.find((item) => isSidebarCategory(item) && item.label === 'Angular');
+
+  if (!angularCategory || !isSidebarCategory(angularCategory)) {
+    return runtimeItems.filter((item) => item.to.startsWith('/angular/'));
+  }
+
+  const componentsCategory = angularCategory.items.find(
+    (item) => isSidebarCategory(item) && item.label === 'Components',
+  );
+
+  if (!componentsCategory || !isSidebarCategory(componentsCategory)) {
+    return runtimeItems.filter((item) => item.to.startsWith('/angular/'));
+  }
+
+  return componentsCategory.items.flatMap((item) => {
+    if (!isSidebarCategory(item)) {
+      return [];
+    }
+
+    return item.items.flatMap((entry) => {
+      if (typeof entry !== 'string') {
+        return [];
+      }
+
+      return [{
+        label: item.label,
+        description: `Angular ${item.label} component documentation`,
+        to: docIdToRoute(entry),
+      }];
+    });
+  });
+}
+
 const SkyDocsRuntimeContext = createContext<RuntimeContextValue | undefined>(undefined);
 
-function SkyCommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+function SkyCommandPalette({ isOpen, onClose, pathname }: { isOpen: boolean; onClose: () => void; pathname: string }) {
   const [query, setQuery] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isAngularDocsRoute = pathname === '/angular' || pathname.startsWith('/angular/');
+  const availableItems = isAngularDocsRoute ? getAngularComponentItems() : runtimeItems;
 
   useEffect(() => {
     if (!isOpen) {
@@ -123,12 +181,12 @@ function SkyCommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   const items = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     if (!normalizedQuery) {
-      return runtimeItems;
+      return availableItems;
     }
-    return runtimeItems.filter((item) => {
+    return availableItems.filter((item) => {
       return `${item.label} ${item.description}`.toLowerCase().includes(normalizedQuery);
     });
-  }, [query]);
+  }, [availableItems, query]);
 
   if (!isOpen) {
     return null;
@@ -146,7 +204,7 @@ function SkyCommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: () =
           <input
             ref={inputRef}
             className="sky-command-input"
-            placeholder="Search docs, starter kit, components..."
+            placeholder={isAngularDocsRoute ? 'Search Angular components...' : 'Search docs, starter kit, components...'}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -311,7 +369,7 @@ export function SkyDocsRuntimeProvider({ children }: { children: React.ReactNode
   return (
     <SkyDocsRuntimeContext.Provider value={value}>
       {children}
-      <SkyCommandPalette isOpen={isPaletteOpen} onClose={() => setPaletteOpen(false)} />
+      <SkyCommandPalette isOpen={isPaletteOpen} onClose={() => setPaletteOpen(false)} pathname={location.pathname} />
     </SkyDocsRuntimeContext.Provider>
   );
 }

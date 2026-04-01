@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_sky_ui_source=self.webpackChunk_sky_ui_source||[]).push([[8644],{98644(e,s,c){c.d(s,{createArchitectureServices:()=>u.S});var u=c(85877);c(6902)}}]);
